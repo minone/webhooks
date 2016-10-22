@@ -59,8 +59,15 @@ public class IncredibleHookService {
 
         WebTarget target = httpClient.target(url);
 
-        Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
+        try {
+            Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
 
-        return Response.Status.OK.getStatusCode() == response.getStatus();
+            return Response.Status.OK.getStatusCode() == response.getStatus();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
     }
 }
