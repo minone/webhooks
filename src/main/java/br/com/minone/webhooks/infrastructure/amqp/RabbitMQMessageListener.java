@@ -1,50 +1,52 @@
 package br.com.minone.webhooks.infrastructure.amqp;
 
-import java.util.Date;
-
+import br.com.minone.webhooks.infrastructure.service.IncredibleHookService;
+import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 
-import com.rabbitmq.client.Channel;
-
-import br.com.minone.webhooks.infrastructure.service.IncredibleHookService;
+import java.util.Date;
 
 public class RabbitMQMessageListener implements ChannelAwareMessageListener {
 
-	private static final int HOURS = 2;
+    private static final int HOURS = 2;
 
-	private static final long DAY_MILISECONDS = 60000L;
+    private static final long DAY_MILISECONDS = 60000L;
 
-	private final IncredibleHookService incredibleHookService;
+    private final IncredibleHookService incredibleHookService;
 
-	public RabbitMQMessageListener() {
-		this.incredibleHookService = IncredibleHookService.newInstance();
-	}
+    public RabbitMQMessageListener() {
+        this.incredibleHookService = IncredibleHookService.newInstance();
+    }
 
-	@Override
-	public void onMessage(Message message, Channel channel) throws Exception {
+    @Override
+    public void onMessage(Message message, Channel channel) throws Exception {
 
-		String url = message.getMessageProperties().getReplyTo();
+        String url = message.getMessageProperties().getReplyTo();
 
-		String content = new String(message.getBody());
+        String content = new String(message.getBody());
 
-		String contentType = message.getMessageProperties().getContentType();
+        String contentType = message.getMessageProperties().getContentType();
 
-		boolean success = incredibleHookService.deliver(url, content, contentType);
+        System.out.println("Mensagem: " + url);
 
-		if (!success) {
+        boolean success = incredibleHookService.deliver(url, content, contentType);
 
-			Date messageDate = message.getMessageProperties().getTimestamp();
+        if (!success) {
 
-			Date now = new Date();
+            Date messageDate = message.getMessageProperties().getTimestamp();
 
-			long diffInHours = (now.getTime() - messageDate.getTime()) / DAY_MILISECONDS;
+            Date now = new Date();
 
-			if (diffInHours < HOURS) {
-				channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
-			}
+            long diffInHours = (now.getTime() - messageDate.getTime()) / DAY_MILISECONDS;
 
-		}
+            System.out.println("Diferenca " + diffInHours);
 
-	}
+            if (diffInHours < HOURS) {
+                channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
+            }
+
+        }
+
+    }
 }

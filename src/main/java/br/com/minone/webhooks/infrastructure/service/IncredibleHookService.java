@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 
 public class IncredibleHookService {
 
-    private static final int TOTAL_ATTEMPTS = 5;
+    private static final int TOTAL_ATTEMPTS = 3;
 
     private IncredibleHookService() {
 
@@ -41,12 +41,11 @@ public class IncredibleHookService {
 
     private void backoff(int attempt) {
 
-        long time = (int) Math.pow(attempt, 2) * 1000;
+        long time = attempt * attempt * 1000;
 
         try {
             System.out.println("Dormindo por " + time);
             Thread.sleep(time);
-            System.out.println("Acordei");
 
         } catch (InterruptedException e) {
             // TODO logar
