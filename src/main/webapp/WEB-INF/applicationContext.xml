@@ -42,9 +42,6 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="applicationServiceRegistry"
-          class="br.com.mibox.estoque.infrastructure.handler.DomainEventHandlerRegistry"/>
-
     <bean id="schemaHelper" class="${schema.helper.class}"/>
 
     <!-- rabbit:connection-factory
