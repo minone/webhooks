@@ -1,4 +1,4 @@
-package br.com.minone.web;
+package br.com.minone.webhooks.infrastructure.logger;
 
 import org.apache.logging.log4j.LogManager;
 

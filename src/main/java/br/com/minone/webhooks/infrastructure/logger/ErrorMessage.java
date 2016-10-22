@@ -1,4 +1,4 @@
-package br.com.minone.web;
+package br.com.minone.webhooks.infrastructure.logger;
 
 public class ErrorMessage {
 

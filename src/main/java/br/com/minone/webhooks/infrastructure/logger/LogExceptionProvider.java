@@ -1,4 +1,4 @@
-package br.com.minone.web;
+package br.com.minone.webhooks.infrastructure.logger;
 
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;

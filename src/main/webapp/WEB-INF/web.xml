@@ -48,7 +48,7 @@
     <init-param>
         <param-name>jaxrs.providers</param-name>
         <param-value>
-            br.com.minone.web.LogExceptionProvider
+            br.com.minone.webhooks.infrastructure.logger.LogExceptionProvider
         </param-value>
     </init-param>
 
