@@ -11,11 +11,6 @@ public class DestinationRepositoryImpl implements DestinationRepository {
     }
 
     @Override
-    public void updateDestination(Destination destination) {
-
-    }
-
-    @Override
     public void deleteDestination(DestinationId destinationId) {
 
     }

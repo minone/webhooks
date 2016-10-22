@@ -4,10 +4,18 @@ public class PostMessage {
 
     private String messageBody;
 
-    private ContentType contentType;
+    private String contentType;
 
-    public PostMessage(String messageBody, ContentType contentType) {
+    public PostMessage(String messageBody, String contentType) {
         this.messageBody = messageBody;
         this.contentType = contentType;
+    }
+
+    public String getMessageBody() {
+        return messageBody;
+    }
+
+    public String getContentType() {
+        return contentType;
     }
 }
