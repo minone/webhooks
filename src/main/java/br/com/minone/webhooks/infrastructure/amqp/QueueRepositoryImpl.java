@@ -40,7 +40,7 @@ public class QueueRepositoryImpl implements QueueRepository {
 	}
 
 	@Override
-	public void addQueue(String id) {
+	public synchronized void addQueue(String id) {
 
 		if (!listeners.containsKey(id)) {
 

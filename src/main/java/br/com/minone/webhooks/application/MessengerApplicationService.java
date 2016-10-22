@@ -27,6 +27,8 @@ public class MessengerApplicationService {
 		if (!signature.equals(hmac)) {
 			throw new SecurityException("Signature does not match");
 		}
+		
+		addQueue(id);
 
 		sendMessage(id, url, contentType, content);
 
