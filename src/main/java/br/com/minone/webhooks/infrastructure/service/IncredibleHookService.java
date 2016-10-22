@@ -61,10 +61,10 @@ public class IncredibleHookService {
         try {
             Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
 
-            return Response.Status.OK.getStatusCode() == response.getStatus();
+            return Response.Status.Family.familyOf(response.getStatus()).equals(Response.Status.Family.SUCCESSFUL);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //TODO logar
         }
 
         return false;
