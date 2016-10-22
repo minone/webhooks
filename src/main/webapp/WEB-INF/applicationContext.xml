@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:context="http://www.springframework.org/schema/context"
-        xmlns:aop="http://www.springframework.org/schema/aop"
-        xmlns:tx="http://www.springframework.org/schema/tx"
-        xmlns:task="http://www.springframework.org/schema/task"
-        xmlns:rabbit="http://www.springframework.org/schema/rabbit"
-        xmlns="http://www.springframework.org/schema/beans"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
@@ -16,57 +13,33 @@
         http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <context:annotation-config/>
+	<context:annotation-config />
 
-    <aop:aspectj-autoproxy/>
+	<aop:aspectj-autoproxy />
 
-    <context:component-scan
-            base-package="br.com.minone.webhooks.infrastructure.amqp, 
+	<context:component-scan
+		base-package="br.com.minone.webhooks.infrastructure.amqp, 
             br.com.minone.webhooks.infrastructure.persistence, 
             br.com.minone.webhooks.presentation, 
-            br.com.minone.webhooks.application"/>
+            br.com.minone.webhooks.application" />
 
-    <task:annotation-driven/>
+	<task:annotation-driven />
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-    </bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
 
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"></property>
-    </bean>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
-    <bean id="schemaHelper" class="${schema.helper.class}"/>
-
-    <!-- rabbit:connection-factory
-            id="connectionFactory"
-            host="${amqp.host}"
-            virtual-host="${amqp.virtualhost}"
-            port="${amqp.port}"
-            username="${amqp.username}"
-            password="${amqp.password}"/>
-
-    <rabbit:admin id="containerAdmin" connection-factory="connectionFactory"/>
-
-    <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory"/>
-
-    <bean id="messageListener" class="br.com.minone.infrastructure.amqp.MessageListener"/>
-
-    <rabbit:listener-container connection-factory="connectionFactory">
-    </rabbit:listener-container>
-
-    <rabbit:fanout-exchange id="estoqueExchange" name="estoqueExchange" auto-delete="true" declared-by="containerAdmin">
-        <rabbit:bindings>
-            <rabbit:binding queue="estoqueQueue"/>
-        </rabbit:bindings>
-    </rabbit:fanout-exchange> -->
-
-    <context:property-placeholder location="classpath:application.properties"/>
+	<context:property-placeholder location="classpath:application.properties" />
 
 </beans>
