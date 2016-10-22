@@ -10,11 +10,10 @@ public class DestinationQueryModelRowMapper implements RowMapper<DestinationQuer
 
     @Override
     public DestinationQueryModel mapRow(ResultSet resultSet, int i) throws SQLException {
-//        String destinationId = resultSet.getString("dest_id_destination");
-//
-//        String destinationUrl = resultSet.getString("dest_tx_url");
-//
-//        return new DestinationQueryModel(estoqueId, estoqueNome, TipoEstoque.fromValue(tipoEstoque).toString());
-        return null;
+        String destinationId = resultSet.getString("dest_id_destination");
+
+        String destinationUrl = resultSet.getString("dest_tx_url");
+
+        return new DestinationQueryModel(destinationId, destinationUrl);
     }
 }

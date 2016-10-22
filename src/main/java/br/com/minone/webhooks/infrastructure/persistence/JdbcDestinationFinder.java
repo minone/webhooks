@@ -19,14 +19,11 @@ public class JdbcDestinationFinder extends WebhookJdbcSupport
 
     @Override
     public List<DestinationQueryModel> listDestinations() {
-//        String query = "";
-//
-//        List<DestinationQueryModel> queryModels = getJdbcTemplate().query(query, new EstoqueQueryModelRowMapper(),
-//                queryMetaData.getQueryParameters());
-//
-//        int totalItems = getJdbcTemplate().queryForObject( queryCount, queryMetaData.getQueryParameters(), Integer.class);
-//
-//        return new QueryResult<>(queryModels, totalItems);
-        return null;
+        String query = "select * from destination";
+
+        List<DestinationQueryModel> queryModels = getJdbcTemplate().query(query,
+                new DestinationQueryModelRowMapper());
+
+        return queryModels;
     }
 }
