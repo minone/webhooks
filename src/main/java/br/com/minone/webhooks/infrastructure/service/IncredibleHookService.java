@@ -9,38 +9,58 @@ import javax.ws.rs.core.Response;
 
 public class IncredibleHookService {
 
-	private IncredibleHookService() {}
+    private static final int TOTAL_ATTEMPTS = 5;
 
-	public static IncredibleHookService newInstance() {
-		return new IncredibleHookService();
-	}
+    private IncredibleHookService() {
 
-	public boolean deliver(String url, String content, String contentType, int attempt) {
-		backoff(attempt);
+    }
 
-		return post(url, content, contentType);
-	}
+    public static IncredibleHookService newInstance() {
+        return new IncredibleHookService();
+    }
 
-	private void backoff(int attempt) {
+    public boolean deliver(String url, String content, String contentType) {
 
-		long time = (int) Math.pow(attempt, 2) * 1000;
+        boolean success = false;
 
-		try {
-			Thread.sleep(time);
+        int attempt = 1;
 
-		} catch (InterruptedException e) {
-			// TODO logar
-		}
-	}
+        while (attempt <= TOTAL_ATTEMPTS && !success) {
 
-	private boolean post(String url, String content, String contentType) {
+            success = post(url, content, contentType);
 
-		Client httpClient = ClientBuilder.newClient();
+            if (!success) {
+                backoff(attempt);
+            }
 
-		WebTarget target = httpClient.target(url);
+            attempt++;
+        }
 
-		Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
+        return success;
+    }
 
-		return Response.Status.OK.getStatusCode() == response.getStatus();
-	}
+    private void backoff(int attempt) {
+
+        long time = (int) Math.pow(attempt, 2) * 1000;
+
+        try {
+            System.out.println("Dormindo por " + time);
+            Thread.sleep(time);
+            System.out.println("Acordei");
+
+        } catch (InterruptedException e) {
+            // TODO logar
+        }
+    }
+
+    private boolean post(String url, String content, String contentType) {
+
+        Client httpClient = ClientBuilder.newClient();
+
+        WebTarget target = httpClient.target(url);
+
+        Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
+
+        return Response.Status.OK.getStatusCode() == response.getStatus();
+    }
 }

@@ -18,23 +18,15 @@ public class RabbitMQMessageListener implements ChannelAwareMessageListener {
 	@Override
 	public void onMessage(Message message, Channel channel) throws Exception {
 		
-		System.out.println(message);
-
 		String url = message.getMessageProperties().getReplyTo();
 		
 		String content = new String(message.getBody());
 		
 		String contentType = message.getMessageProperties().getContentType();
 		
-		int attempt = message.getMessageProperties().getMessageCount();
-		
-		boolean success = incredibleHookService.deliver(url, content, contentType, attempt);
+		boolean success = incredibleHookService.deliver(url, content, contentType);
 		
 		if (!success) {
-			attempt++;
-			
-			message.getMessageProperties().setMessageCount(attempt);
-			
 			channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
 		}
 
