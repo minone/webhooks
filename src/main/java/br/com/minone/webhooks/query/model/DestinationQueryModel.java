@@ -6,6 +6,11 @@ public class DestinationQueryModel {
 
     private String URL;
 
+    public DestinationQueryModel(String id, String URL) {
+        this.id = id;
+        this.URL = URL;
+    }
+
     public String getId() {
         return id;
     }
