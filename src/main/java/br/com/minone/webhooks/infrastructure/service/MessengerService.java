@@ -42,10 +42,11 @@ public class MessengerService {
 
     private void backoff(int attempt) {
 
-        long time = attempt ^ 2 * 500;
+        long time = (int) Math.pow(attempt, 2) * 500;
 
         try {
             Thread.sleep(time);
+
         } catch (InterruptedException e) {
             //TODO logar
         }
