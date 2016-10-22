@@ -20,7 +20,7 @@ public class MessengerApplicationService {
 
         String signature = SignatureService.newInstance(HmacAlgorithm.HMAC_SHA1).calculateHMAC(secret, content);
 
-        if (signature != hmac) {
+        if (!signature.equals(hmac)) {
             throw new SecurityException("Signature does not match");
         }
 
