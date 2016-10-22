@@ -3,7 +3,9 @@ package br.com.minone.webhooks.infrastructure.persistence;
 import br.com.minone.webhooks.domain.model.Destination;
 import br.com.minone.webhooks.domain.model.DestinationId;
 import br.com.minone.webhooks.domain.model.DestinationRepository;
+import br.com.minone.webhooks.exception.WebhooksConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -49,6 +51,11 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport
 
         List<Destination> destinations =
                 getJdbcTemplate().query(query, new DestinationRowMapper(), destinationId.getId());
+
+
+        if (destinations == null) {
+            throw new EmptyResultDataAccessException(WebhooksConstant.RECORD_NOT_FOUND, 1);
+        }
 
 //        if (destinations.isEmpty())
 //            throw new
