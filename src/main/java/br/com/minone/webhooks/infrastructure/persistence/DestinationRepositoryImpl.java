@@ -3,8 +3,17 @@ package br.com.minone.webhooks.infrastructure.persistence;
 import br.com.minone.webhooks.domain.model.Destination;
 import br.com.minone.webhooks.domain.model.DestinationId;
 import br.com.minone.webhooks.domain.model.DestinationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class DestinationRepositoryImpl implements DestinationRepository {
+import javax.sql.DataSource;
+
+public class DestinationRepositoryImpl extends WebhookJdbcSupport implements DestinationRepository {
+
+    @Autowired
+    public DestinationRepositoryImpl(DataSource dataSource) {
+        super(dataSource);
+    }
+
     @Override
     public void registerDestination(Destination destination) {
 
