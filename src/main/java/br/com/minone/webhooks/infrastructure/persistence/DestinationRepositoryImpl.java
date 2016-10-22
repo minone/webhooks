@@ -6,8 +6,10 @@ import br.com.minone.webhooks.domain.model.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
+import java.util.UUID;
 
-public class DestinationRepositoryImpl extends WebhookJdbcSupport implements DestinationRepository {
+public class DestinationRepositoryImpl extends WebhookJdbcSupport
+        implements DestinationRepository {
 
     @Autowired
     public DestinationRepositoryImpl(DataSource dataSource) {
@@ -16,16 +18,22 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport implements Des
 
     @Override
     public void registerDestination(Destination destination) {
+        String destinationId = UUID.randomUUID().toString();
 
+        String url = destination.getURL();
+
+        String insert = "insert into destination(dest_id_destination, dest_tx_url) " +
+                "values(?,?)";
+
+        getJdbcTemplate().update(insert, destinationId, url);
     }
 
     @Override
     public void deleteDestination(DestinationId destinationId) {
+        String id = destinationId.getId().toString();
 
-    }
+        String delete = "delete from destination where dest_id_destination = ?";
 
-    @Override
-    public Destination loadDestination(DestinationId destinationId) {
-        return null;
+        getJdbcTemplate().update(delete, id);
     }
 }

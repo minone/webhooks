@@ -21,13 +21,4 @@ public class Destination {
     public String getURL() {
         return URL;
     }
-
-    public void changeDestinationUrl(String newURL) {
-
-        if (StringUtils.isEmpty(newURL)) {
-            throw new BusinessException("Destination URL can not be empty");
-        }
-
-        this.URL = newURL;
-    }
 }

@@ -8,6 +8,4 @@ public interface DestinationRepository {
     void registerDestination(Destination destination);
 
     void deleteDestination(DestinationId destinationId);
-
-    Destination loadDestination(DestinationId destinationId);
 }
