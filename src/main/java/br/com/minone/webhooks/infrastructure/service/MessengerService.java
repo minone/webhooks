@@ -1,7 +1,5 @@
 package br.com.minone.webhooks.infrastructure.service;
 
-import br.com.minone.webhooks.security.HmacAlgorithm;
-import br.com.minone.webhooks.security.SignatureService;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.Client;
@@ -18,9 +16,7 @@ public class MessengerService {
 
     private static final int TRIES = 3;
 
-    public boolean deliver(String url, String content, String contentType, String secret) {
-
-        String signature = SignatureService.newInstance(HmacAlgorithm.HMAC_SHA1).calculateHMAC(secret, content);
+    public boolean deliver(String url, String content, String contentType, String signature) {
 
         int attempt = 1;
 

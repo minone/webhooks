@@ -2,10 +2,10 @@ package br.com.minone.webhooks.presentation;
 
 
 import br.com.minone.webhooks.application.DestinationApplicationService;
+import br.com.minone.webhooks.application.MessengerApplicationService;
 import br.com.minone.webhooks.application.command.PostMessageCmd;
 import br.com.minone.webhooks.application.command.RegisterDestinationCmd;
 import br.com.minone.webhooks.domain.model.Destination;
-import br.com.minone.webhooks.infrastructure.service.MessengerService;
 import br.com.minone.webhooks.query.model.DestinationQueryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,14 +25,14 @@ public class FrontController {
 
     private final DestinationApplicationService destinationApplicationService;
 
-    private final MessengerService messengerService;
+    private final MessengerApplicationService messengerApplicationService;
 
     @Autowired
     public FrontController(DestinationApplicationService destinationApplicationService,
-                           MessengerService messengerService) {
+                           MessengerApplicationService messengerApplicationService1) {
 
         this.destinationApplicationService = destinationApplicationService;
-        this.messengerService = messengerService;
+        this.messengerApplicationService = messengerApplicationService1;
     }
 
     @POST
@@ -65,13 +65,16 @@ public class FrontController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/post-message")
-    public Response postMessage(@NotNull @Valid PostMessageCmd cmd) {
-        Destination destination= destinationApplicationService.loadDestination(cmd.getDestinationId());
+    public Response postMessage(@NotNull @Valid PostMessageCmd cmd,
+                                @NotNull @HeaderParam("Content-MD5") String hmac) {
+
+        Destination destination = destinationApplicationService.loadDestination(cmd.getDestinationId());
 
         String url = destination.getUrl();
+
         String secret = destination.getSecurity();
 
-        messengerService.deliver(url, cmd.getContent(), cmd.getContentType(), secret);
+        messengerApplicationService.post(url, secret, hmac, cmd.getContentType(), cmd.getContent());
 
         return Response.status(Response.Status.OK).build();
     }
