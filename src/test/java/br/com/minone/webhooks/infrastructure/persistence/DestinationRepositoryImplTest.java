@@ -3,8 +3,6 @@ package br.com.minone.webhooks.infrastructure.persistence;
 import br.com.minone.webhooks.domain.model.Destination;
 import br.com.minone.webhooks.domain.model.DestinationId;
 import br.com.minone.webhooks.domain.model.DestinationRepository;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +50,19 @@ public class DestinationRepositoryImplTest {
         destinationRepository.deleteDestination(destinationId);
     }
 
-    @Before
-    public void setUp() {
-    }
+    @Test
+    public void testLoadDestinationSuccess() throws Exception {
+        // Arrange
+        DestinationId destinationId = new DestinationId(UUID.randomUUID());
+        Destination expected = new Destination(destinationId, TEST_URL);
+        destinationRepository.registerDestination(expected);
 
+        // Act
+        Destination selected = destinationRepository.loadDestination(destinationId);
 
-    @After
-    public void tearDown() {
-
+        // Assert
+        assertEquals(expected.getId().getId(), selected.getId().getId());
+        assertEquals(expected.getSecurity(), selected.getSecurity());
+        assertEquals(expected.getUrl(), selected.getUrl());
     }
 }

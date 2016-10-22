@@ -52,13 +52,10 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport
         List<Destination> destinations =
                 getJdbcTemplate().query(query, new DestinationRowMapper(), destinationId.getId());
 
-
-        if (destinations == null) {
+        if (destinations == null || destinations.isEmpty()) {
             throw new EmptyResultDataAccessException(WebhooksConstant.RECORD_NOT_FOUND, 1);
         }
 
-//        if (destinations.isEmpty())
-//            throw new
         return destinations.get(0);
     }
 }
