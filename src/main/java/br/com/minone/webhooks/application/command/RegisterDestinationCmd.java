@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 public class RegisterDestinationCmd {
 
     @NotNull
-    private String URL;
+    private String url;
 
     @NotNull
     private String contentType;
@@ -13,12 +13,12 @@ public class RegisterDestinationCmd {
     public RegisterDestinationCmd() {
     }
 
-    public String getURL() {
-        return URL;
+    public String getUrl() {
+        return url;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getContentType() {

@@ -33,7 +33,7 @@ public class DestinationApplicationService {
     public String registerDestination(RegisterDestinationCmd cmd) throws BusinessException {
         DestinationId destinationId = new DestinationId(UUID.randomUUID());
 
-        Destination destination = new Destination(destinationId, cmd.getURL());
+        Destination destination = new Destination(destinationId, cmd.getUrl());
 
         return destinationRepository.registerDestination(destination);
     }
