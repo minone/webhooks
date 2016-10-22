@@ -11,5 +11,12 @@ public class RabbitMQMessageListener implements MessageListener {
 	@Override
 	public void onMessage(Message message) {
 		System.out.println(message);
+		
+		try {
+			Thread.currentThread().sleep(20000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
