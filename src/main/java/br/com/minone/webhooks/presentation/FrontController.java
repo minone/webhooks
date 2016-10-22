@@ -65,7 +65,10 @@ public class FrontController {
     @Path("/post-message")
     public Response postMessage(@NotNull @Valid PostMessageCmd cmd) {
 
-        messengerService.post(cmd.getDestinationId(), cmd.getContent(), cmd.getContentType());
+        String url = "";
+        String secret = "";
+
+        messengerService.deliver(url, cmd.getContent(), cmd.getContentType(), secret);
 
         return Response.status(Response.Status.OK).build();
     }
