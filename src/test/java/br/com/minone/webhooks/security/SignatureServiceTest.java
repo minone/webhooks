@@ -8,7 +8,7 @@ public class SignatureServiceTest {
     @Test
     public void calculateHMAC() {
 
-        String secret = "56a6e7f1-1b32-4f8a-8670-2729824fc13b";
+        String secret = "306ad26c-cb8f-4215-817c-f85288a858dc";
 
         String data = "vanhackathon and hootsuite";
 
@@ -16,6 +16,8 @@ public class SignatureServiceTest {
 
         String hash = service.calculateHMAC(data, secret);
 
+        //ESdRhUqTnJ8HheZdMbig00CbLec=
+        //ESdRhUqTnJ8HheZdMbig00CbLec=
         System.out.println(hash);
     }
 }

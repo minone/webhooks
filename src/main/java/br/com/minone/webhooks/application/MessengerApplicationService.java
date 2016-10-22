@@ -1,15 +1,14 @@
 package br.com.minone.webhooks.application;
 
-import java.util.Date;
-
+import br.com.minone.webhooks.domain.model.QueueRepository;
+import br.com.minone.webhooks.security.HmacAlgorithm;
+import br.com.minone.webhooks.security.SignatureService;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.minone.webhooks.domain.model.QueueRepository;
-import br.com.minone.webhooks.security.HmacAlgorithm;
-import br.com.minone.webhooks.security.SignatureService;
+import java.util.Date;
 
 @Service
 public class MessengerApplicationService {
@@ -23,7 +22,7 @@ public class MessengerApplicationService {
 
 	public void postMessage(String id, String url, String secret, String hmac, String contentType, String content) {
 
-		String signature = SignatureService.newInstance(HmacAlgorithm.HMAC_SHA1).calculateHMAC(secret, content);
+		String signature = SignatureService.newInstance(HmacAlgorithm.HMAC_SHA1).calculateHMAC(content, secret);
 
 		if (!signature.equals(hmac)) {
 			throw new SecurityException("Signature does not match");
