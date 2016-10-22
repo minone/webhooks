@@ -4,10 +4,12 @@ import br.com.minone.webhooks.domain.model.Destination;
 import br.com.minone.webhooks.domain.model.DestinationId;
 import br.com.minone.webhooks.domain.model.DestinationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.UUID;
 
+@Repository
 public class DestinationRepositoryImpl extends WebhookJdbcSupport
         implements DestinationRepository {
 
