@@ -16,7 +16,7 @@ public class MessengerApplicationService {
         this.messengerService = messengerService;
     }
 
-    public void post(String url, String secret, String hmac, String contentType, String content) {
+    public void postMessage(String url, String secret, String hmac, String contentType, String content) {
 
         String signature = SignatureService.newInstance(HmacAlgorithm.HMAC_SHA1).calculateHMAC(secret, content);
 

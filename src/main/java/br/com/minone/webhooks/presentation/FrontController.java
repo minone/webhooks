@@ -74,7 +74,7 @@ public class FrontController {
 
         String secret = destination.getSecurity();
 
-        messengerApplicationService.post(url, secret, hmac, cmd.getContentType(), cmd.getContent());
+        messengerApplicationService.postMessage(url, secret, hmac, cmd.getContentType(), cmd.getContent());
 
         return Response.status(Response.Status.OK).build();
     }
