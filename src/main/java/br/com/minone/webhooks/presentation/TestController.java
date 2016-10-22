@@ -3,6 +3,7 @@ package br.com.minone.webhooks.presentation;
 import javax.inject.Singleton;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -23,17 +24,17 @@ public class TestController {
 	private QueueRepository queueRepository;
 
 	@POST
-	@Path("/queue")
-	public void addQueue() {
-		queueRepository.addQueue("1");
+	@Path("/queue/{id}")
+	public void addQueue(@PathParam("id") String id) {
+		queueRepository.addQueue(id);
 	}
 
 	@POST
-	@Path("/send")
-	public void send() {
+	@Path("/send/{q}/{m}")
+	public void send(@PathParam("q") String q, @PathParam("m") String m) {
 		// send something
 		RabbitTemplate template = new RabbitTemplate(connectionFactory);
-		template.convertAndSend("email", "1", "Hello, world!");
+		template.convertAndSend("email", q, m);
 	}
 
 }
