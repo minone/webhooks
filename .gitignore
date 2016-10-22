@@ -3,5 +3,5 @@
 .settings/
 target/
 
-.idea
 webhooks.iml
+.idea
