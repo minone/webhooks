@@ -4,6 +4,7 @@ package br.com.minone.webhooks.presentation;
 import br.com.minone.webhooks.application.DestinationApplicationService;
 import br.com.minone.webhooks.application.command.PostMessageCmd;
 import br.com.minone.webhooks.application.command.RegisterDestinationCmd;
+import br.com.minone.webhooks.domain.model.Destination;
 import br.com.minone.webhooks.infrastructure.service.MessengerService;
 import br.com.minone.webhooks.query.model.DestinationQueryModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,9 +66,10 @@ public class FrontController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/post-message")
     public Response postMessage(@NotNull @Valid PostMessageCmd cmd) {
+        Destination destination= destinationApplicationService.loadDestination(cmd.getDestinationId());
 
-        String url = "";
-        String secret = "";
+        String url = destination.getUrl();
+        String secret = destination.getSecurity();
 
         messengerService.deliver(url, cmd.getContent(), cmd.getContentType(), secret);
 

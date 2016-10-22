@@ -5,12 +5,14 @@ import br.com.minone.webhooks.application.command.RegisterDestinationCmd;
 import br.com.minone.webhooks.domain.model.Destination;
 import br.com.minone.webhooks.domain.model.DestinationId;
 import br.com.minone.webhooks.domain.model.DestinationRepository;
+import br.com.minone.webhooks.exception.BusinessException;
 import br.com.minone.webhooks.query.model.DestinationFinder;
 import br.com.minone.webhooks.query.model.DestinationQueryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +30,7 @@ public class DestinationApplicationService {
     }
 
     @Transactional
-    public String registerDestination(RegisterDestinationCmd cmd) {
+    public String registerDestination(RegisterDestinationCmd cmd) throws BusinessException {
         DestinationId destinationId = new DestinationId(UUID.randomUUID());
 
         Destination destination = new Destination(destinationId, cmd.getURL());
@@ -46,5 +48,12 @@ public class DestinationApplicationService {
     @Transactional(readOnly = true)
     public List<DestinationQueryModel> listDestinations() {
         return destinationFinder.listDestinations();
+    }
+
+    @Transactional(readOnly = true)
+    public Destination loadDestination(String destinationId){
+        DestinationId id = new DestinationId(UUID.fromString(destinationId));
+
+        return destinationRepository.loadDestination(id);
     }
 }

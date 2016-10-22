@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class DestinationRepositoryImpl extends WebhookJdbcSupport
@@ -21,12 +22,14 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport
     public String registerDestination(Destination destination) {
         DestinationId destinationId = destination.getId();
 
-        String url = destination.getURL();
+        String url = destination.getUrl();
 
-        String insert = "insert into destination(dest_id_destination, dest_tx_url) " +
-                "values(?,?)";
+        String security = destination.getSecurity();
 
-        getJdbcTemplate().update(insert, destinationId.getId(), url);
+        String insert = "insert into destination(dest_id_destination, dest_tx_url, dest_tx_secret) " +
+                "values(?,?,?)";
+
+        getJdbcTemplate().update(insert, destinationId.getId(), url, security);
 
         return destinationId.getId();
     }
@@ -38,5 +41,17 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport
         String delete = "delete from destination where dest_id_destination = ?";
 
         getJdbcTemplate().update(delete, id);
+    }
+
+    @Override
+    public Destination loadDestination(DestinationId destinationId) {
+        String query = "select * from destination where dest_id_destination = ?";
+
+        List<Destination> destinations =
+                getJdbcTemplate().query(query, new DestinationRowMapper(), destinationId.getId());
+
+//        if (destinations.isEmpty())
+//            throw new
+        return destinations.get(0);
     }
 }

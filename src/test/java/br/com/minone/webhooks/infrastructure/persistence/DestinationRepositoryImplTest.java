@@ -3,23 +3,19 @@ package br.com.minone.webhooks.infrastructure.persistence;
 import br.com.minone.webhooks.domain.model.Destination;
 import br.com.minone.webhooks.domain.model.DestinationId;
 import br.com.minone.webhooks.domain.model.DestinationRepository;
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:testContext.xml")
@@ -30,7 +26,7 @@ public class DestinationRepositoryImplTest {
     @Autowired
     private DestinationRepository destinationRepository;
 
-    private final String TEST_URL = "testUrl";
+    private final String TEST_URL = "http://www.example.com/validTestUrl";
 
     @Test
     public void testRegisterDestination() throws Exception {
@@ -47,7 +43,13 @@ public class DestinationRepositoryImplTest {
 
     @Test
     public void testDeleteDestination() throws Exception {
+        // Arrange
+        DestinationId destinationId = new DestinationId(UUID.randomUUID());
+        Destination destination = new Destination(destinationId, TEST_URL);
+        destinationRepository.registerDestination(destination);
 
+        // Act
+        destinationRepository.deleteDestination(destinationId);
     }
 
     @Before

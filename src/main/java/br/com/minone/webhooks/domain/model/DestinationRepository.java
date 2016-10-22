@@ -8,4 +8,6 @@ public interface DestinationRepository {
     String registerDestination(Destination destination);
 
     void deleteDestination(DestinationId destinationId);
+
+    Destination loadDestination(DestinationId destinationId);
 }
