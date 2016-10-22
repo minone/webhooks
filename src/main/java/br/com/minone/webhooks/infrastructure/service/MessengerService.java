@@ -16,7 +16,7 @@ public class MessengerService {
 
     private static final int TRIES = 3;
 
-    public boolean deliver(String url, String content, String contentType, String signature) {
+    public boolean deliver(String url, String content, String contentType) {
 
         int attempt = 1;
 
@@ -24,7 +24,7 @@ public class MessengerService {
 
         while (attempt <= TRIES && !ok) {
 
-            ok = post(url, content, contentType, signature);
+            ok = post(url, content, contentType);
 
             if (!ok) {
                 backoff(attempt);
@@ -48,15 +48,13 @@ public class MessengerService {
         }
     }
 
-    private boolean post(String url, String content, String contentType, String signature) {
+    private boolean post(String url, String content, String contentType) {
 
         Client httpClient = ClientBuilder.newClient();
 
         WebTarget target = httpClient.target(url);
 
-        Response response = target.request()
-                .header(CONTENT_MD5, signature)
-                .post(Entity.entity(content, MediaType.valueOf(contentType)));
+        Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
 
         return Response.Status.OK.getStatusCode() == response.getStatus();
     }
