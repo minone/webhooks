@@ -3,10 +3,12 @@ package br.com.minone.webhooks.infrastructure.persistence;
 import br.com.minone.webhooks.query.model.DestinationFinder;
 import br.com.minone.webhooks.query.model.DestinationQueryModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
+@Repository
 public class JdbcDestinationFinder extends WebhookJdbcSupport
         implements DestinationFinder {
 
@@ -17,14 +19,11 @@ public class JdbcDestinationFinder extends WebhookJdbcSupport
 
     @Override
     public List<DestinationQueryModel> listDestinations() {
-        String query = "";
+        String query = "select * from destination";
 
-//        List<DestinationQueryModel> queryModels = getJdbcTemplate().query(query, new EstoqueQueryModelRowMapper(),
-//                queryMetaData.getQueryParameters());
-//
-//        int totalItems = getJdbcTemplate().queryForObject( queryCount, queryMetaData.getQueryParameters(), Integer.class);
-//
-//        return new QueryResult<>(queryModels, totalItems);
-        return null;
+        List<DestinationQueryModel> queryModels = getJdbcTemplate().query(query,
+                new DestinationQueryModelRowMapper());
+
+        return queryModels;
     }
 }
