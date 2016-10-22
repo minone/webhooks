@@ -12,7 +12,7 @@ import javax.ws.rs.ext.Provider;
  *
  * @author Manoel Menezes (manoel.menezes.jr@gmail.com)
  */
-@Provider
+//@Provider
 public class LogExceptionProvider extends Logger implements ExceptionMapper<Exception> {
 
 }
