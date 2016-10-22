@@ -2,7 +2,9 @@ package br.com.minone.webhooks.presentation;
 
 
 import br.com.minone.webhooks.application.DestinationApplicationService;
+import br.com.minone.webhooks.application.command.PostMessageCmd;
 import br.com.minone.webhooks.application.command.RegisterDestinationCmd;
+import br.com.minone.webhooks.infrastructure.service.MessengerService;
 import br.com.minone.webhooks.query.model.DestinationQueryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,9 +24,13 @@ public class FrontController {
 
     private final DestinationApplicationService destinationApplicationService;
 
+    private final MessengerService messengerService;
+
     @Autowired
-    public FrontController(DestinationApplicationService destinationApplicationService) {
+    public FrontController(DestinationApplicationService destinationApplicationService,
+                           MessengerService messengerService) {
         this.destinationApplicationService = destinationApplicationService;
+        this.messengerService = messengerService;
     }
 
     @POST
@@ -52,5 +58,15 @@ public class FrontController {
         List<DestinationQueryModel> result = destinationApplicationService.listDestinations();
 
         return Response.status(Response.Status.OK).entity(result).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/post-message")
+    public Response postMessage(@NotNull @Valid PostMessageCmd cmd) {
+
+        messengerService.post(cmd.getDestinationId(), cmd.getContent(), cmd.getContentType());
+
+        return Response.status(Response.Status.OK).build();
     }
 }
