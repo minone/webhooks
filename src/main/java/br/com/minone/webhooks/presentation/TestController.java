@@ -34,7 +34,7 @@ public class TestController {
 	public void send(@PathParam("q") String q, @PathParam("m") String m) {
 		// send something
 		RabbitTemplate template = new RabbitTemplate(connectionFactory);
-		template.convertAndSend("email", q, m);
+		template.convertAndSend("test-fanout", q, m);
 	}
 
 }

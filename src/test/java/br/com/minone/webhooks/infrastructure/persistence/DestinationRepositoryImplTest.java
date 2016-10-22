@@ -36,7 +36,7 @@ public class DestinationRepositoryImplTest {
         String returnedId = destinationRepository.registerDestination(destination);
 
         // Assert
-        assertEquals(expectedId.getId().toString(), returnedId);
+        assertEquals(expectedId.value().toString(), returnedId);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class DestinationRepositoryImplTest {
         Destination selected = destinationRepository.loadDestination(destinationId);
 
         // Assert
-        assertEquals(expected.getId().getId(), selected.getId().getId());
+        assertEquals(expected.getId().value(), selected.getId().value());
         assertEquals(expected.getSecurity(), selected.getSecurity());
         assertEquals(expected.getUrl(), selected.getUrl());
     }

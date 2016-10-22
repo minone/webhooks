@@ -31,14 +31,14 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport
         String insert = "insert into destination(dest_id_destination, dest_tx_url, dest_tx_secret) " +
                 "values(?,?,?)";
 
-        getJdbcTemplate().update(insert, destinationId.getId(), url, security);
+        getJdbcTemplate().update(insert, destinationId.value(), url, security);
 
-        return destinationId.getId();
+        return destinationId.value();
     }
 
     @Override
     public void deleteDestination(DestinationId destinationId) {
-        String id = destinationId.getId().toString();
+        String id = destinationId.value().toString();
 
         String delete = "delete from destination where dest_id_destination = ?";
 
@@ -50,7 +50,7 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport
         String query = "select * from destination where dest_id_destination = ?";
 
         List<Destination> destinations =
-                getJdbcTemplate().query(query, new DestinationRowMapper(), destinationId.getId());
+                getJdbcTemplate().query(query, new DestinationRowMapper(), destinationId.value());
 
         if (destinations == null || destinations.isEmpty()) {
             throw new EmptyResultDataAccessException(WebhooksConstant.RECORD_NOT_FOUND, 1);

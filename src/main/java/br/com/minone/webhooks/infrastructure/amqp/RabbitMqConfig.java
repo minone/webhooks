@@ -2,7 +2,7 @@ package br.com.minone.webhooks.infrastructure.amqp;
 
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -22,7 +22,7 @@ public class RabbitMqConfig {
 	@Value("${amqp.host}")
 	private String host;
 
-	@Value("${amqp.port:5672}")
+	@Value("${amqp.port}")
 	private int port;
 
 	@Value("${amqp.username}")
@@ -30,6 +30,9 @@ public class RabbitMqConfig {
 
 	@Value("${amqp.password}")
 	private String password;
+
+	@Value("${amqp.exchange}")
+	private String exchange;
 
 	@Bean
 	public ConnectionFactory connectionFactory() {
@@ -43,21 +46,14 @@ public class RabbitMqConfig {
 		return connectionFactory;
 	}
 
-	/**
-	 * Required for executing adminstration functions against an AMQP Broker
-	 */
 	@Bean
 	public AmqpAdmin amqpAdmin() {
 		return new RabbitAdmin(connectionFactory());
 	}
 
-	/**
-	 * The following is a complete declaration of an exchange, a queue and a
-	 * exchange-queue binding
-	 */
 	@Bean
-	public TopicExchange exchange() {
-		return new TopicExchange("email", true, false);
+	public FanoutExchange exchange() {
+		return new FanoutExchange(exchange, true, false);
 	}
 
 }
