@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error" strict="true" name="XMLConfig">
+  <Properties>
+    <Property name="filename">log/minone.log</Property>
+  </Properties>
+
+  <Appenders>
+    <Appender type="File" name="File" fileName="${filename}">
+      <Layout type="PatternLayout">
+        <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+      </Layout>
+    </Appender>
+  </Appenders>
+
+  <Loggers>
+
+    <Logger name="br.com.minone.logger" level="error" additivity="false">
+      <AppenderRef ref="File"/>
+    </Logger>
+
+
+  </Loggers>
+
+</Configuration>
