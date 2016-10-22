@@ -1,4 +1,4 @@
-package br.com.minone.webhooks.infrastructure;
+package br.com.minone.webhooks.infrastructure.persistence;
 
 import br.com.minone.webhooks.domain.model.DestinationRepository;
 

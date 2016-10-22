@@ -24,7 +24,7 @@
             base-package="br.com.minone.webhooks.infrastructure.amqp, 
             br.com.minone.webhooks.infrastructure.persistence, 
             br.com.minone.webhooks.presentation, 
-            br.com.mibox.webhooks.application"/>
+            br.com.minone.webhooks.application"/>
 
     <task:annotation-driven/>
 
