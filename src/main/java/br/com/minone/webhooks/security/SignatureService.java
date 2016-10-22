@@ -18,7 +18,7 @@ public class SignatureService {
         return new SignatureService(algorithm);
     }
 
-    public String calculateHMAC(String secret, String data) {
+    public String calculateHMAC(String content, String secret) {
 
         try {
             SecretKeySpec sharedPK = new SecretKeySpec(secret.getBytes(), algorithm.getId());
@@ -26,7 +26,7 @@ public class SignatureService {
             Mac mac = Mac.getInstance(algorithm.getId());
             mac.init(sharedPK);
 
-            byte[] rawData = mac.doFinal(data.getBytes());
+            byte[] rawData = mac.doFinal(content.getBytes());
 
             String result = new String(Base64.getEncoder().encode(rawData), StandardCharsets.UTF_8);
 

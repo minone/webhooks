@@ -12,9 +12,9 @@ public class SignatureServiceTest {
 
         String data = "vanhackathon and hootsuite";
 
-        SignatureService service = SignatureService.newInstance(HmacAlgorithm.HMAC_SHA256);
+        SignatureService service = SignatureService.newInstance(HmacAlgorithm.HMAC_SHA1);
 
-        String hash = service.calculateHMAC(secret, data);
+        String hash = service.calculateHMAC(data, secret);
 
         System.out.println(hash);
     }
