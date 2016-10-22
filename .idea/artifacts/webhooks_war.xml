@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="webhooks:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/webhooks_war</output-path>
-    <root id="archive" name="webhooks_war.war">
-      <element id="artifact" artifact-name="webhooks:war exploded" />
-    </root>
-  </artifact>
-</component>
