@@ -4,13 +4,6 @@
     <display-name>Minone</display-name>
 
     <context-param>
-      <param-name>log4jConfiguration</param-name>
-      <param-value>
-        /WEB-INF/logging.xml
-      </param-value>
-    </context-param>
-
-    <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/applicationContext.xml
@@ -44,30 +37,5 @@
         <servlet-name>jersey-serlvet</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
-
-    <init-param>
-        <param-name>jaxrs.providers</param-name>
-        <param-value>
-            br.com.minone.webhooks.infrastructure.logger.LogExceptionProvider
-        </param-value>
-    </init-param>
-
-    <listener>
-        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
-    </listener>
-
-   <filter>
-        <filter-name>log4jServletFilter</filter-name>
-        <filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>log4jServletFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>ERROR</dispatcher>
-        <dispatcher>ASYNC</dispatcher><!-- Servlet 3.0 w/ disabled auto-initialization only; not supported in 2.5 -->
-    </filter-mapping>
 
 </web-app>

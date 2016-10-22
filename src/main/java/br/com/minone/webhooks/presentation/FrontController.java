@@ -53,4 +53,13 @@ public class FrontController {
 
         return Response.status(Response.Status.OK).entity(result).build();
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/teste")
+    public Response teste() {
+
+        String teste = "testee";
+        return Response.status(Response.Status.OK).entity(teste).build();
+    }
 }
