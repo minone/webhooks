@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.UUID;
 
 @Repository
 public class DestinationRepositoryImpl extends WebhookJdbcSupport
@@ -19,15 +18,17 @@ public class DestinationRepositoryImpl extends WebhookJdbcSupport
     }
 
     @Override
-    public void registerDestination(Destination destination) {
-        String destinationId = UUID.randomUUID().toString();
+    public String registerDestination(Destination destination) {
+        DestinationId destinationId = destination.getId();
 
         String url = destination.getURL();
 
         String insert = "insert into destination(dest_id_destination, dest_tx_url) " +
                 "values(?,?)";
 
-        getJdbcTemplate().update(insert, destinationId, url);
+        getJdbcTemplate().update(insert, destinationId.getId(), url);
+
+        return destinationId.getId();
     }
 
     @Override

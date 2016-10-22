@@ -38,9 +38,9 @@ public class FrontController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/destination")
     public Response registerDestination(@Valid RegisterDestinationCmd cmd) {
-        destinationApplicationService.registerDestination(cmd);
+        String destinationId = destinationApplicationService.registerDestination(cmd);
 
-        return Response.status(Response.Status.OK).build();
+        return Response.status(Response.Status.OK).entity(destinationId).build();
     }
 
     @DELETE

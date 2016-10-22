@@ -28,12 +28,12 @@ public class DestinationApplicationService {
     }
 
     @Transactional
-    public void registerDestination(RegisterDestinationCmd cmd) {
+    public String registerDestination(RegisterDestinationCmd cmd) {
         DestinationId destinationId = new DestinationId(UUID.randomUUID());
 
         Destination destination = new Destination(destinationId, cmd.getURL());
 
-        destinationRepository.registerDestination(destination);
+        return destinationRepository.registerDestination(destination);
     }
 
     @Transactional

@@ -10,7 +10,7 @@ public class DestinationId {
         this.id = id;
     }
 
-    public UUID getId() {
-        return id;
+    public String getId() {
+        return id.toString();
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DestinationRepository {
 
-    void registerDestination(Destination destination);
+    String registerDestination(Destination destination);
 
     void deleteDestination(DestinationId destinationId);
 }
