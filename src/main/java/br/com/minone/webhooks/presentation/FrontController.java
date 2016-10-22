@@ -73,11 +73,4 @@ public class FrontController {
 
         return Response.status(Response.Status.OK).build();
     }
-
-    @POST
-    @Path("test")
-    public Response postTeste() {
-        return Response.status(Response.Status.OK).build();
-    }
-
 }
