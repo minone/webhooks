@@ -13,7 +13,9 @@ public class DestinationQueryModelRowMapper implements RowMapper<DestinationQuer
         String destinationId = resultSet.getString("dest_id_destination");
 
         String destinationUrl = resultSet.getString("dest_tx_url");
+        
+        String secret = resultSet.getString("dest_tx_secret");
 
-        return new DestinationQueryModel(destinationId, destinationUrl);
+        return new DestinationQueryModel(destinationId, destinationUrl, secret);
     }
 }

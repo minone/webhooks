@@ -1,5 +1,11 @@
 package br.com.minone.webhooks.application;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.minone.webhooks.application.command.RegisterDestinationCmd;
 import br.com.minone.webhooks.domain.model.Destination;
@@ -8,12 +14,6 @@ import br.com.minone.webhooks.domain.model.DestinationRepository;
 import br.com.minone.webhooks.exception.BusinessException;
 import br.com.minone.webhooks.query.model.DestinationFinder;
 import br.com.minone.webhooks.query.model.DestinationQueryModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class DestinationApplicationService {
@@ -29,7 +29,7 @@ public class DestinationApplicationService {
         this.destinationRepository = destinationRepository;
         this.destinationFinder = destinationFinder;
     }
-
+    
     @Transactional
     public String registerDestination(RegisterDestinationCmd cmd) throws BusinessException {
 
