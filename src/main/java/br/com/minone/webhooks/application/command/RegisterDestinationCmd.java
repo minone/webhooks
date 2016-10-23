@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public class RegisterDestinationCmd {
 
-    @NotNull
+    @NotNull(message = "{registration.url}")
     private String url;
 
     public RegisterDestinationCmd() {
