@@ -31,8 +31,8 @@ public class FrontController {
 
     /***
      * Constructor that receives application services.
-     * @param destinationApplicationService
-     * @param messengerApplicationService
+     * @param destinationApplicationService application service that manages destination operations.
+     * @param messengerApplicationService application service that manages all messages posted over queues.
      */
     @Autowired
     public FrontController(DestinationApplicationService destinationApplicationService,
@@ -45,7 +45,7 @@ public class FrontController {
     /***
      * Register a destination based on its URL.
      * @param cmd Command that contains only a URL to be registered.
-     * @return
+     * @return GUID that identifies this destination.
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class FrontController {
      * Post a new message. This message must contain the destination identifier and its content-type.
      * @param cmd Message to post on a destination.
      * @param hmac HMAC signature that assures a secure connection between the client and server.
-     * @return
+     * @return Response with an OK status.
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -108,9 +108,13 @@ public class FrontController {
         return Response.status(Response.Status.OK).build();
     }
 
+    /***
+     * Endpoint created to test a successful usage of the webhook. We reached the target and got a OK (200) status code.
+     * @return Response containing a string and a OK status code.
+     */
     @POST
     @Path("callback")
-    public Response callback(String content) {
+    public Response callback() {
 
         String helloHootSuite = "Hello Owl!";
 
