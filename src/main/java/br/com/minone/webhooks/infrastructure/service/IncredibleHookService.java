@@ -36,7 +36,7 @@ public class IncredibleHookService {
             success = post(url, content, contentType);
 
             if (!success) {
-                firebaseRepository.post(url + " >>> Backoff:  " + attempt * attempt * 1000 + " seconds");
+                firebaseRepository.post(url + " > Backoff:  " + (attempt * attempt * 1000) / 1000 + " seconds");
                 backoff(attempt);
             }
 
@@ -65,13 +65,14 @@ public class IncredibleHookService {
         WebTarget target = httpClient.target(url);
 
         try {
+            firebaseRepository.post(url + " > Trying to POST");
             Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
 
             boolean result = Response.Status.Family.familyOf(response.getStatus())
                     .equals(Response.Status.Family.SUCCESSFUL);
 
             if (result) {
-                firebaseRepository.post(url + " >>> POST returned 200");
+                firebaseRepository.post(url + " > POST returned 200");
             }
 
             return result;

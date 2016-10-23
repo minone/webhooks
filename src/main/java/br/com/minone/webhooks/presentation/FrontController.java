@@ -5,6 +5,7 @@ import br.com.minone.webhooks.application.MessengerApplicationService;
 import br.com.minone.webhooks.application.command.PostMessageCmd;
 import br.com.minone.webhooks.application.command.RegisterDestinationCmd;
 import br.com.minone.webhooks.domain.model.Destination;
+import br.com.minone.webhooks.infrastructure.firebase.FirebaseRepository;
 import br.com.minone.webhooks.query.model.DestinationQueryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,8 @@ public class FrontController {
 
     private final MessengerApplicationService messengerApplicationService;
 
+    private final FirebaseRepository firebaseRepository;
+
     /***
      * Constructor that receives application services.
      * @param destinationApplicationService application service that manages destination operations.
@@ -36,10 +39,12 @@ public class FrontController {
      */
     @Autowired
     public FrontController(DestinationApplicationService destinationApplicationService,
-                           MessengerApplicationService messengerApplicationService) {
+                           MessengerApplicationService messengerApplicationService,
+                           FirebaseRepository firebaseRepository) {
 
         this.destinationApplicationService = destinationApplicationService;
         this.messengerApplicationService = messengerApplicationService;
+        this.firebaseRepository = firebaseRepository;
     }
 
     /***
@@ -113,11 +118,11 @@ public class FrontController {
      * @return Response containing a string and a OK status code.
      */
     @POST
-    @Path("callback")
+    @Path("/callback")
     public Response callback() {
 
-        String helloHootSuite = "Hello Owl!";
+        firebaseRepository.post("Hello Owl!");
 
-        return Response.status(Response.Status.OK).entity(helloHootSuite).build();
+        return Response.status(Response.Status.OK).build();
     }
 }

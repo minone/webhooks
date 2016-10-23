@@ -40,6 +40,7 @@ public class FirebaseRepository {
 
 
     public void post(String message) {
+        System.out.println(message);
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
