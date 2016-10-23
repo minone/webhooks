@@ -2,7 +2,7 @@
 Team:
 - Felipe Menezes Cardoso https://br.linkedin.com/in/felipemcardoso
 - Daniel Faria : https://br.linkedin.com/in/daniel-de-faria-monte-alegre-souza-b34382107
-- Manoel Messias: linkedin.com/in/manoel-menezes-64b241a
+- Manoel Messias: https://linkedin.com/in/manoel-menezes-64b241a
 
 Key points:
 - HMAC shared secret key for each url/destination.
