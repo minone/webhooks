@@ -4,11 +4,11 @@ public class DestinationQueryModel {
 
     private String id;
 
-    private String URL;
+    private String url;
 
-    public DestinationQueryModel(String id, String URL) {
+    public DestinationQueryModel(String id, String url) {
         this.id = id;
-        this.URL = URL;
+        this.url = url;
     }
 
     public String getId() {
@@ -19,11 +19,11 @@ public class DestinationQueryModel {
         this.id = id;
     }
 
-    public String getURL() {
-        return URL;
+    public String getUrl() {
+        return url;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
