@@ -26,12 +26,13 @@ public class FrontController {
 
     private final MessengerApplicationService messengerApplicationService;
 
+
     @Autowired
     public FrontController(DestinationApplicationService destinationApplicationService,
-                           MessengerApplicationService messengerApplicationService1) {
+                           MessengerApplicationService messengerApplicationService) {
 
         this.destinationApplicationService = destinationApplicationService;
-        this.messengerApplicationService = messengerApplicationService1;
+        this.messengerApplicationService = messengerApplicationService;
     }
 
     @POST
@@ -82,6 +83,7 @@ public class FrontController {
     }
 
     @POST
+    @Path("callback")
     public Response callback(String content) {
 
         String helloHootSuite = "Hello Owl!";

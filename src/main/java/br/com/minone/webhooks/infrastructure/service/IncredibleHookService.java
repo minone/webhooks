@@ -1,5 +1,7 @@
 package br.com.minone.webhooks.infrastructure.service;
 
+import br.com.minone.webhooks.infrastructure.firebase.FirebaseRepository;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -11,11 +13,15 @@ public class IncredibleHookService {
 
     private static final int TOTAL_ATTEMPTS = 3;
 
+    private static FirebaseRepository firebaseRepository;
+
     private IncredibleHookService() {
 
     }
 
-    public static IncredibleHookService newInstance() {
+    public static IncredibleHookService newInstance(FirebaseRepository firebaseRepository) {
+        IncredibleHookService.firebaseRepository = firebaseRepository;
+
         return new IncredibleHookService();
     }
 
@@ -31,6 +37,9 @@ public class IncredibleHookService {
 
             if (!success) {
                 backoff(attempt);
+
+            } else {
+                firebaseRepository.post("POST OK to " + url);
             }
 
             attempt++;
@@ -42,9 +51,9 @@ public class IncredibleHookService {
     private void backoff(int attempt) {
 
         long time = attempt * attempt * 1000;
+        firebaseRepository.post("Backoff for " + time / 1000 + " seconds");
 
         try {
-            System.out.println("Dormindo por " + time);
             Thread.sleep(time);
 
         } catch (InterruptedException e) {

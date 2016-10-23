@@ -1,15 +1,8 @@
 package br.com.minone.webhooks.infrastructure.amqp;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.inject.Singleton;
-
-import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.Queue;
+import br.com.minone.webhooks.domain.model.QueueRepository;
+import br.com.minone.webhooks.infrastructure.firebase.FirebaseRepository;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -17,7 +10,9 @@ import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import br.com.minone.webhooks.domain.model.QueueRepository;
+import javax.inject.Singleton;
+import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
 @Repository
@@ -31,12 +26,19 @@ public class QueueRepositoryImpl implements QueueRepository {
 
 	private final ConnectionFactory connectionFactory;
 
+    private final FirebaseRepository firebaseRepository;
+
 	@Autowired
-	public QueueRepositoryImpl(AmqpAdmin amqpAdmin, FanoutExchange exchange, ConnectionFactory connectionFactory) {
-		this.amqpAdmin = amqpAdmin;
+	public QueueRepositoryImpl(AmqpAdmin amqpAdmin,
+                               FanoutExchange exchange,
+                               ConnectionFactory connectionFactory,
+                               FirebaseRepository firebaseRepository) {
+
+        this.amqpAdmin = amqpAdmin;
 		this.exchange = exchange;
 		this.connectionFactory = connectionFactory;
-		this.listeners = new HashMap<>();
+        this.firebaseRepository = firebaseRepository;
+        this.listeners = new HashMap<>();
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class QueueRepositoryImpl implements QueueRepository {
 
 			container.setQueueNames(queueName);
 
-			container.setMessageListener(new MessageListenerAdapter(new RabbitMQMessageListener()));
+			container.setMessageListener(new MessageListenerAdapter(new RabbitMQMessageListener(firebaseRepository)));
 
 			container.start();
 
