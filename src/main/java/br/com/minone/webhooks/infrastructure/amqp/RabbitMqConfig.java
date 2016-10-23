@@ -2,7 +2,7 @@ package br.com.minone.webhooks.infrastructure.amqp;
 
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -52,8 +52,8 @@ public class RabbitMqConfig {
 	}
 
 	@Bean
-	public FanoutExchange exchange() {
-		return new FanoutExchange(exchange, true, false);
+	public DirectExchange exchange() {
+		return new DirectExchange(exchange, true, false);
 	}
 
 }
