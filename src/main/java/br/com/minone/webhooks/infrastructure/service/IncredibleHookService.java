@@ -36,7 +36,7 @@ public class IncredibleHookService {
             success = post(url, content, contentType);
 
             if (!success) {
-                firebaseRepository.post(url + " >>> Backoff:  " + attempt * attempt / 1000 + " seconds");
+                firebaseRepository.post(url + " >>> Backoff:  " + attempt * attempt * 1000 + " seconds");
                 backoff(attempt);
             }
 
