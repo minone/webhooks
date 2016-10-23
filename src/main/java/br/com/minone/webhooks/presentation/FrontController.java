@@ -36,7 +36,6 @@ public class FrontController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/destination")
     public Response registerDestination(@Valid RegisterDestinationCmd cmd) {
 
