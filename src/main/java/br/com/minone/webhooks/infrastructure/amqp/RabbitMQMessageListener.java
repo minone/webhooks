@@ -34,6 +34,7 @@ public class RabbitMQMessageListener implements ChannelAwareMessageListener {
 
         String contentType = message.getMessageProperties().getContentType();
 
+        firebaseRepository.post(url + " >>> ");
         firebaseRepository.post(url + " >>> Trying to POST");
 
         boolean success = incredibleHookService.deliver(url, content, contentType);
@@ -49,7 +50,7 @@ public class RabbitMQMessageListener implements ChannelAwareMessageListener {
             long diffInHours = (now.getTime() - messageDate.getTime()) / DAY_MILISECONDS;
 
             if (diffInHours < HOURS) {
-                firebaseRepository.post(url + " >>> Message will be deleted because of retention window (2 minutes)");
+                firebaseRepository.post(url + " >>> Message will be deleted due to expiration time (2 minutes)");
 
                 channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
             }
