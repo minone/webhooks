@@ -7,11 +7,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-/**
- * Created by felipe on 12/31/15.
- */
 @Provider
-public class ValidationExceptionMappter implements ExceptionMapper<ConstraintViolationException> {
+public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
 
     @Override
     public Response toResponse(ConstraintViolationException e) {

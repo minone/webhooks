@@ -10,7 +10,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class SpringDataAccessException implements ExceptionMapper<DataAccessException> {
+public class SpringDataAccessMapper implements ExceptionMapper<DataAccessException> {
 
     @Override
     public Response toResponse(DataAccessException e) {

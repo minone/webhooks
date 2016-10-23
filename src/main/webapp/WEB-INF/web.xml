@@ -32,6 +32,16 @@
 
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
+    <init-param>
+        <param-name>jaxrs.providers</param-name>
+        <param-value>
+            br.com.minone.webhooks.exception.BusinessExceptionMapper,
+            br.com.minone.webhooks.exception.ValidationExceptionMapper,
+            br.com.minone.webhooks.exception.SpringDataAccessMapper,
+            br.com.minone.webhooks.exception.GenericExceptionMapper
+        </param-value>
+    </init-param>
 
     <servlet-mapping>
         <servlet-name>jersey-serlvet</servlet-name>
