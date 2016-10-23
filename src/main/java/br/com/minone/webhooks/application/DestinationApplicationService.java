@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,17 +19,20 @@ import java.util.UUID;
 public class DestinationApplicationService {
 
     private final DestinationRepository destinationRepository;
+
     private final DestinationFinder destinationFinder;
 
     @Autowired
     public DestinationApplicationService(DestinationRepository destinationRepository,
                                          DestinationFinder destinationFinder) {
+
         this.destinationRepository = destinationRepository;
         this.destinationFinder = destinationFinder;
     }
 
     @Transactional
     public String registerDestination(RegisterDestinationCmd cmd) throws BusinessException {
+
         DestinationId destinationId = new DestinationId(UUID.randomUUID());
 
         Destination destination = new Destination(destinationId, cmd.getUrl());
@@ -40,6 +42,7 @@ public class DestinationApplicationService {
 
     @Transactional
     public void deleteDestination(String destinationId) {
+
         DestinationId id = new DestinationId(UUID.fromString(destinationId));
 
         destinationRepository.deleteDestination(id);
@@ -52,6 +55,7 @@ public class DestinationApplicationService {
 
     @Transactional(readOnly = true)
     public Destination loadDestination(String destinationId){
+
         DestinationId id = new DestinationId(UUID.fromString(destinationId));
 
         return destinationRepository.loadDestination(id);
