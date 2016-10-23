@@ -7,9 +7,6 @@ public class RegisterDestinationCmd {
     @NotNull
     private String url;
 
-    @NotNull
-    private String contentType;
-
     public RegisterDestinationCmd() {
     }
 
@@ -19,13 +16,5 @@ public class RegisterDestinationCmd {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 }
