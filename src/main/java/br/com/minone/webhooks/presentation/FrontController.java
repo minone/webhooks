@@ -22,63 +22,71 @@ import java.util.List;
 @Path("/webhooks")
 public class FrontController {
 
-	private final DestinationApplicationService destinationApplicationService;
+    private final DestinationApplicationService destinationApplicationService;
 
-	private final MessengerApplicationService messengerApplicationService;
+    private final MessengerApplicationService messengerApplicationService;
 
-	@Autowired
-	public FrontController(DestinationApplicationService destinationApplicationService,
-			MessengerApplicationService messengerApplicationService1) {
+    @Autowired
+    public FrontController(DestinationApplicationService destinationApplicationService,
+                           MessengerApplicationService messengerApplicationService1) {
 
-		this.destinationApplicationService = destinationApplicationService;
-		this.messengerApplicationService = messengerApplicationService1;
-	}
+        this.destinationApplicationService = destinationApplicationService;
+        this.messengerApplicationService = messengerApplicationService1;
+    }
 
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/destination")
-	public Response registerDestination(@Valid RegisterDestinationCmd cmd) {
-		
-		String destinationId = destinationApplicationService.registerDestination(cmd);
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/destination")
+    public Response registerDestination(@Valid RegisterDestinationCmd cmd) {
 
-		messengerApplicationService.addQueue(destinationId);
+        String destinationId = destinationApplicationService.registerDestination(cmd);
 
-		return Response.status(Response.Status.OK).entity(destinationId).build();
-	}
+        messengerApplicationService.addQueue(destinationId);
 
-	@DELETE
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/destination/{destinationId}")
-	public void deleteDestination(@NotNull @Valid @PathParam("destinationId") String destinationId) {
-		destinationApplicationService.deleteDestination(destinationId);
-	}
+        return Response.status(Response.Status.OK).entity(destinationId).build();
+    }
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/destination")
-	public Response listDestinations() {
-		List<DestinationQueryModel> result = destinationApplicationService.listDestinations();
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/destination/{destinationId}")
+    public void deleteDestination(@NotNull @Valid @PathParam("destinationId") String destinationId) {
+        destinationApplicationService.deleteDestination(destinationId);
+    }
 
-		return Response.status(Response.Status.OK).entity(result).build();
-	}
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/destination")
+    public Response listDestinations() {
+        List<DestinationQueryModel> result = destinationApplicationService.listDestinations();
 
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/post-message")
-	public Response postMessage(@NotNull @Valid PostMessageCmd cmd, @NotNull @HeaderParam("Content-MD5") String hmac) {
+        return Response.status(Response.Status.OK).entity(result).build();
+    }
 
-		Destination destination = destinationApplicationService.loadDestination(cmd.getDestinationId());
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/post-message")
+    public Response postMessage(@NotNull @Valid PostMessageCmd cmd, @NotNull @HeaderParam("Content-MD5") String hmac) {
 
-		String id = destination.getId().value();
-		
-		String url = destination.getUrl();
+        Destination destination = destinationApplicationService.loadDestination(cmd.getDestinationId());
 
-		String secret = destination.getSecurity();
+        String id = destination.getId().value();
 
-		messengerApplicationService.postMessage(id, url, secret, hmac, cmd.getContentType(), cmd.getContent());
+        String url = destination.getUrl();
 
-		return Response.status(Response.Status.OK).build();
-	}
+        String secret = destination.getSecurity();
+
+        messengerApplicationService.postMessage(id, url, secret, hmac, cmd.getContentType(), cmd.getContent());
+
+        return Response.status(Response.Status.OK).build();
+    }
+
+    @POST
+    public Response callback(String content) {
+
+        String helloHootSuite = "Hello Owl!";
+
+        return Response.status(Response.Status.OK).entity(helloHootSuite).build();
+    }
 }
