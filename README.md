@@ -37,5 +37,17 @@ We created the frontend to demonstrate the basic operations of the Rest API and 
 # A REST API is exposed with five basic operations, according to the requirements:
 
 - /webhooks/post-message
-- /webhooks/destination
+Post a message
+
+- @POST /destination
+Creates a new Destination and also create a Queue to support it.
+
+- @GET /destination
+Retrieve Destination list
+
+- @DELTE /destination/{destinationId}
+Detele a specific destination
+
+- @POST /callback
+A dummy end-point just to test a succeciful request
 
