@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 public class IncredibleHookService {
 
-    private static final int TOTAL_ATTEMPTS = 3;
+    private static final int TOTAL_ATTEMPTS = 5;
 
     private static FirebaseRepository firebaseRepository;
 
@@ -36,11 +36,8 @@ public class IncredibleHookService {
             success = post(url, content, contentType);
 
             if (!success) {
-                firebaseRepository.post(url + " Backoff:  " + attempt * attempt / 1000 + " seconds");
+                firebaseRepository.post(url + " >>> Backoff:  " + attempt * attempt / 1000 + " seconds");
                 backoff(attempt);
-
-            } else {
-                firebaseRepository.post(url + " POST returned 200");
             }
 
             attempt++;
@@ -70,7 +67,14 @@ public class IncredibleHookService {
         try {
             Response response = target.request().post(Entity.entity(content, MediaType.valueOf(contentType)));
 
-            return Response.Status.Family.familyOf(response.getStatus()).equals(Response.Status.Family.SUCCESSFUL);
+            boolean result = Response.Status.Family.familyOf(response.getStatus())
+                    .equals(Response.Status.Family.SUCCESSFUL);
+
+            if (result) {
+                firebaseRepository.post(url + " >>> POST returned 200");
+            }
+
+            return result;
 
         } catch (Exception e) {
             //TODO logar
