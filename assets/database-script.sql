@@ -1,4 +1,5 @@
 --# Webhooks Database PostgreSQL Script #
+-- Table used to storage all destinations hooked by application.
 
 CREATE TABLE destination (
   dest_id_destination VARCHAR(36)   NOT NULL,

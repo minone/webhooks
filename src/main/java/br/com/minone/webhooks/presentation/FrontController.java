@@ -17,6 +17,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/***
+ * Controller that receives all requests from clients using standard REST-ful conventions.
+ */
 @Component
 @Singleton
 @Path("/webhooks")
@@ -26,7 +29,11 @@ public class FrontController {
 
     private final MessengerApplicationService messengerApplicationService;
 
-
+    /***
+     * Constructor that receives application services.
+     * @param destinationApplicationService
+     * @param messengerApplicationService
+     */
     @Autowired
     public FrontController(DestinationApplicationService destinationApplicationService,
                            MessengerApplicationService messengerApplicationService) {
@@ -35,6 +42,11 @@ public class FrontController {
         this.messengerApplicationService = messengerApplicationService;
     }
 
+    /***
+     * Register a destination based on its URL.
+     * @param cmd Command that contains only a URL to be registered.
+     * @return
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/destination")
@@ -47,6 +59,10 @@ public class FrontController {
         return Response.status(Response.Status.OK).entity(destinationId).build();
     }
 
+    /***
+     * Delete a destination based on its GUID.
+     * @param destinationId GUID linked to the destination to be erased.
+     */
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,6 +71,10 @@ public class FrontController {
         destinationApplicationService.deleteDestination(destinationId);
     }
 
+    /***
+     * List all destinations.
+     * @return A list of all destinations.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/destination")
@@ -64,6 +84,12 @@ public class FrontController {
         return Response.status(Response.Status.OK).entity(result).build();
     }
 
+    /***
+     * Post a new message. This message must contain the destination identifier and its content-type.
+     * @param cmd Message to post on a destination.
+     * @param hmac HMAC signature that assures a secure connection between the client and server.
+     * @return
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/post-message")
