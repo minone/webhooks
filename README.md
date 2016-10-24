@@ -49,7 +49,7 @@ Demo video: https://youtu.be/RiM0Cjv8I-4
 
 ```javascript
 {
-	"Content-MD5":""    
+	"Content-MD5":"bf9tyOb7nzyi9D8Q1gpLWuonlsI="    
 }
 ```
 
@@ -61,9 +61,26 @@ var hmacString = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(content, secret
 
 - @POST /destination :Creates a new Destination and also create a Queue to support it.
 
+### Params example
+
+```javascript
+{
+	"url":"http://test.com"
+}
+```
+
 - @GET /destination :Retrieve Destination list
 
 - @DELTE /destination/{destinationId} : Detele a specific destination
 
 - @POST /callback : A dummy end-point just to test a succeciful request
 
+# Build 
+
+Build the project using Maven. We are using a cloud PostgreSQL database with limited number of connections, so to avoid running the repository tests use -Dmaven.test.skip=true in the command:
+
+	mvn clean package -Dmaven.test.skip=true
+
+# Configuration of LOG_HOME
+
+LOG_HOME: Environment variable to be configured as a JVM parameter that represents the folder where log file will be saved.
