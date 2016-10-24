@@ -34,6 +34,31 @@ Demo video: https://youtu.be/RiM0Cjv8I-4
 
 - @POST /webhooks/post-message :Request the webhook to post a message to the destination
 
+### Params example
+
+```javascript
+{
+	"destinationId":"0b1ce089-9046-4af4-9de6-01c16558d4bb",
+	"contentType":"text/html",
+    "content":"<p>message content</p>"	
+}
+```
+
+### Headers: HMAC of destination secret key and content.
+
+
+```javascript
+{
+	"Content-MD5":""    
+}
+```
+
+### It can be found in the front end web application a javascript code to generate the Content-MD5 header
+
+```javascript
+var hmacString = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(content, secret));
+```
+
 - @POST /destination :Creates a new Destination and also create a Queue to support it.
 
 - @GET /destination :Retrieve Destination list
