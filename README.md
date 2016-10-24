@@ -32,18 +32,13 @@ Demo video: https://youtu.be/RiM0Cjv8I-4
 
 # A REST API is exposed with five basic operations, according to the requirements:
 
-- @POST /webhooks/post-message
-Post a message
+- @POST /webhooks/post-message :Request the webhook to post a message to the destination
 
-- @POST /destination
-Creates a new Destination and also create a Queue to support it.
+- @POST /destination :Creates a new Destination and also create a Queue to support it.
 
-- @GET /destination
-Retrieve Destination list
+- @GET /destination :Retrieve Destination list
 
-- @DELTE /destination/{destinationId}
-Detele a specific destination
+- @DELTE /destination/{destinationId} : Detele a specific destination
 
-- @POST /callback
-A dummy end-point just to test a succeciful request
+- @POST /callback : A dummy end-point just to test a succeciful request
 
